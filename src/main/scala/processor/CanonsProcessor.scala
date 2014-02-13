@@ -84,25 +84,25 @@ class CanonsProcessor(pid: Int, nP: Int, n: Int) extends Actor with ActorLogging
       sendStuff(matrixL, matrixR)
     }
 
-    def sendStuff(matrixL : Matrix, matrixR : Matrix) = {
+    def sendStuff(matrixL: Matrix, matrixR: Matrix) = {
       rounds.getAndDecrement()
-        if (roundId < (sqrt(nP).toInt - 1) ) {
-              processorRouter ! ((upPid, roundId + 1, Up(matrixR)))
-              processorRouter ! ((leftPid, roundId + 1, Left(matrixL)))
-         }
-       if (rounds.get == 0) {
-           log.info("Rounds finished!!!{}", matrixC)
-           storeResultsBlocking(matrixL.name, matrixR.name)
-           currentExecutionContext match {
-             case None  ⇒
-               log.warning(s"!!!unexpected situation!!! executionContext unset while processing in progress")
-             case Some(actor) ⇒
-               log.info(s"Sending finished to $actor")
-               actor !  Finished
-               currentExecutionContext = None
-           }
-           reset()
-         }
+      if (roundId < (sqrt(nP).toInt - 1)) {
+        processorRouter ! ((upPid, roundId + 1, Up(matrixR)))
+        processorRouter ! ((leftPid, roundId + 1, Left(matrixL)))
+      }
+      if (rounds.get == 0) {
+        log.info("Rounds finished!!!{}", matrixC)
+        storeResultsBlocking(matrixL.name, matrixR.name)
+        currentExecutionContext match {
+          case None ⇒
+            log.warning(s"!!!unexpected situation!!! executionContext unset while processing in progress")
+          case Some(actor) ⇒
+            log.info(s"Sending finished to $actor")
+            actor ! Finished
+            currentExecutionContext = None
+        }
+        reset()
+      }
     }
 
      (eventsMap getOrElse (roundId, Nothing ), event) match {
@@ -135,20 +135,20 @@ class CanonsProcessor(pid: Int, nP: Int, n: Int) extends Actor with ActorLogging
 
   def receive = {
 
-    case (_i: Int, roundId: Int, event : CannonsEvent ) ⇒ processEvent(roundId, event)
+    case (_i: Int, roundId: Int, event: CannonsEvent) ⇒ processEvent(roundId, event)
 
-    case (_i: Int, Reset() ) ⇒ reset()
+    case (_i: Int, Reset()) ⇒ reset()
 
-    case (_i: Int, facadePath :String, Ready )  ⇒
-       log.info(s"DEBUG: Got message as ready? from $facadePath")
-       val status = currentExecutionContext match {
-         case None ⇒
-            currentExecutionContext = Some(context.actorSelection(facadePath))
-            Ready
-         case _    ⇒
-            Processing
-       }
-       sender ! status
+    case (_i: Int, facadePath: String, Ready) ⇒
+      log.info(s"DEBUG: Got message as ready? from $facadePath")
+      val status = currentExecutionContext match {
+        case None ⇒
+          currentExecutionContext = Some(context.actorSelection(facadePath))
+          Ready
+        case _ ⇒
+          Processing
+      }
+      sender ! status
   }
 
 }

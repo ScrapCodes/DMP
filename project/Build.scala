@@ -20,7 +20,7 @@ object DMPBuild extends Build {
               ________   _____  __________
               ___/ __ \  __/  |/  /__/ __ \
               __/ / / /  _/ /|_/ /__/ /_/ /
-              _/ /_/ /  _/ /  / / _/ ____/
+              _/ /_/ /   / /  / / _/ ____/
               /_____/   /_/  /_/  /_/
             \.Distributed Matrix Processor./
   """
@@ -43,7 +43,7 @@ object DMPBuild extends Build {
       name                                   :=  "dmp",
       organization                           :=  "org.dmp-project",
       version                                :=  "0.0.1-SNAPSHOT",
-      scalaVersion                           :=  "2.10.2",
+      scalaVersion                           :=  "2.10.3",
       scalacOptions                          :=  Seq("-encoding", "UTF-8", "-unchecked", "-optimize", "-deprecation", "-feature"),
       retrieveManaged                        :=  true,
       libraryDependencies                    ++= Dependencies.processorKernel,
@@ -76,7 +76,7 @@ object Dependencies {
 object Dependency {
 
   object v {
-    val Akka      = "2.2.0-RC1"
+    val Akka      = "2.2.3"
     val slf4j     = "1.7.2"
     val log       = "1.0.1"
     val test      = "1.9.1"
