@@ -46,6 +46,29 @@ object DAGGenerator {
     z
   }
 
+  /**
+   * Generalized cannons Algorithm.
+   *
+   * This allows matrix multiplications with any arbitrary dimensions of blocks.
+   */
+  def GCA(left: DistributedMatrix, right: DistributedMatrix, noOfBlocks: Int) = ???
+
+  def addition(left: DistributedMatrix, right: DistributedMatrix, noOfBlocks: Int) = ???
+
+  def subtract(left: DistributedMatrix, right: DistributedMatrix, noOfBlocks: Int) = ???
+
+  /**
+   * Operation like A' x B or A x B' or A' x B' can actually be optimized rather than processing in different steps.
+   */
+  def multiplyAndTranspose(left: DistributedMatrix, right: DistributedMatrix, noOfBlocks: Int) = ???
+
+  def transpose(mat: DistributedMatrix) = ???
+
+  /**
+   *  Operations like A .* B can also be optimized in conjunction with other operations like A + B or A - B etc..
+   */
+  def dotMultiply(left: DistributedMatrix, right: DistributedMatrix) = ???
+
   @tailrec def downPid(pid: Int, recurse: Int, rounds: Int): Int = {
     if (recurse == 0)
       pid
