@@ -3,7 +3,6 @@ package dmp
 import datastructure.Matrix
 import scala.annotation.tailrec
 import scala.collection.mutable
-import scala.collection.immutable.IndexedSeq
 
 /**
  * Generates a DAG of sub operation given a matrix operation. This is actually the place to implement algorithms for

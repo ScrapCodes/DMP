@@ -25,7 +25,7 @@ class DAGGeneratorSuite extends FunSuite {
     }
     val temp2 = for (row <- cannonsMultiplicationSimple(a, b, 36)) yield {
       row._1 -> (for (block <- row._2) yield {
-        blockIdToijPair(block._1, 6) ->("A" + blockIdToijPair(block._2.left.blockId, 6),
+        blockIdToijPair(block._1, 6) -> ("A" + blockIdToijPair(block._2.left.blockId, 6),
           "B" + blockIdToijPair(block._2.right.blockId, 6))
       })
     }
